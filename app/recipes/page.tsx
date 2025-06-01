@@ -1,0 +1,24 @@
+import { getRecipes } from "@/lib/recipes";
+import { Metadata } from "next";
+import RecipeList from "@/components/recipes/RecipeList";
+
+export const metadata: Metadata = {
+  title: "Recipes list",
+};
+
+const RecipesPage: React.FC = async () => {
+  const recipes = await getRecipes();
+
+  console.log("recipes", recipes);
+
+  throw new Error("Test error");
+
+  return (
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Przepisy</h1>
+      <RecipeList recipes={recipes} />
+    </div>
+  );
+};
+
+export default RecipesPage;
