@@ -16,8 +16,6 @@ const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
   const { id } = await params;
   const recipe = await getRecipe(id);
 
-  console.log("recipe", recipe);
-
   return <RecipeDetails recipe={recipe} />;
 };
 

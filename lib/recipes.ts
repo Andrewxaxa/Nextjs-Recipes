@@ -1,4 +1,3 @@
-import { MessageResponse } from "@/interfaces/message.interface";
 import {
   IAddRecipePayload,
   IInstruction,
@@ -43,10 +42,10 @@ export const getRecipe = async (id: string): Promise<IRecipe> => {
 
 export const addRecipe = async (
   payload: IAddRecipePayload,
-): Promise<MessageResponse> => {
+): Promise<string> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const { title, description } = payload;
+  const { title, description, instructions } = payload;
   const id = createId();
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
@@ -63,5 +62,27 @@ export const addRecipe = async (
     `,
   ).run({ id, title, description, createdAt, updatedAt });
 
-  return { message: "New recipe added" };
+  if (instructions && instructions.length > 0) {
+    const insertInstruction = db.prepare(
+      `
+        INSERT INTO instructions VALUES (
+          @id,
+          @step,
+          @text,
+          @recipeId
+        );
+      `,
+    );
+
+    for (const instruction of instructions) {
+      insertInstruction.run({
+        id: createId(),
+        step: instruction.step,
+        text: instruction.text,
+        recipeId: id,
+      });
+    }
+  }
+
+  return "New recipe added";
 };

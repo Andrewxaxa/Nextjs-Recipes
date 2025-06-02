@@ -10,7 +10,7 @@ const Submit: React.FC = () => {
     <Button
       className="mt-2"
       type="submit"
-      variant="bordered"
+      color="primary"
       disabled={pending}
       isLoading={pending}
     >

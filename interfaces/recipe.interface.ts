@@ -18,7 +18,12 @@ export interface IRecipe {
 export interface IAddRecipePayload {
   title: string;
   description: string;
-  instructions?: IInstruction[];
+  instructions: IAddInstructionPayload[];
+}
+
+export interface IAddInstructionPayload {
+  step: number;
+  text: string;
 }
 
 export interface IUpdateRecipePayload extends IAddRecipePayload {

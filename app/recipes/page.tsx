@@ -9,8 +9,6 @@ export const metadata: Metadata = {
 const RecipesPage: React.FC = async () => {
   const recipes = await getRecipes();
 
-  console.log("recipes", recipes);
-
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6 text-center">Przepisy</h1>
