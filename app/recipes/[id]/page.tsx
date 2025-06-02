@@ -1,13 +1,13 @@
 import { getRecipe } from "@/lib/recipes";
-import RecipeDetails from "@/components/recipes/Recipe";
 import { Metadata } from "next";
+import RecipeDetails from "@/components/recipes/Recipe";
 
 export const metadata: Metadata = {
   title: "Recipe details",
 };
 
 type RecipeDetailsPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({

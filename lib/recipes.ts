@@ -1,4 +1,10 @@
-import { IInstruction, IRecipe } from "@/interfaces/recipe.interface";
+import { MessageResponse } from "@/interfaces/message.interface";
+import {
+  IAddRecipePayload,
+  IInstruction,
+  IRecipe,
+} from "@/interfaces/recipe.interface";
+import { createId } from "@paralleldrive/cuid2";
 import sql from "better-sqlite3";
 const db = sql("app.db");
 
@@ -33,4 +39,29 @@ export const getRecipe = async (id: string): Promise<IRecipe> => {
   recipe.instructions = instructions;
 
   return recipe;
+};
+
+export const addRecipe = async (
+  payload: IAddRecipePayload,
+): Promise<MessageResponse> => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const { title, description } = payload;
+  const id = createId();
+  const createdAt = new Date().toISOString();
+  const updatedAt = createdAt;
+
+  db.prepare(
+    `
+      INSERT INTO recipes VALUES (
+        @id,
+        @title,
+        @description,
+        @createdAt,
+        @updatedAt
+      );
+    `,
+  ).run({ id, title, description, createdAt, updatedAt });
+
+  return { message: "New recipe added" };
 };
