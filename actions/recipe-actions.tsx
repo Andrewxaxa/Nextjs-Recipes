@@ -8,6 +8,7 @@ export interface Errors {
   title?: string;
   description?: string;
   instructions?: string;
+  image?: string;
 }
 
 export interface FormState {
@@ -25,6 +26,7 @@ export const createRecipe = async (
 ) => {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
+  const image = formData.get("image") as File;
   const instructions: string[] = [];
   for (const [key, value] of formData.entries()) {
     if (
@@ -47,6 +49,10 @@ export const createRecipe = async (
     errors.description = "Description is required";
   }
 
+  // if (isInvalidText(image)) {
+  //   errors.image = "Image is required";
+  // }
+
   if (instructions.length === 0) {
     errors.instructions = "Add at least one instruction to the recipe";
   }
@@ -58,6 +64,7 @@ export const createRecipe = async (
   const payload: IAddRecipePayload = {
     title,
     description,
+    image,
     instructions: instructions.map((text, idx) => ({
       step: idx,
       text,
@@ -65,7 +72,6 @@ export const createRecipe = async (
   };
 
   response = await addRecipe(payload);
-  console.log("response", response);
 
   revalidatePath("/recipes");
   return { errors, response };

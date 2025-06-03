@@ -1,5 +1,6 @@
 import { IRecipe } from "@/interfaces/recipe.interface";
 import { Card, CardBody, CardHeader } from "@heroui/card";
+import Image from "next/image";
 
 type RecipeDetailProps = {
   recipe: IRecipe;
@@ -9,12 +10,15 @@ const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <Card className="rounded-xl">
-        <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden">
+        <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden relative">
           {recipe.image ? (
-            <img
-              src={recipe.image}
+            <Image
               alt={recipe.title}
-              className="object-cover w-full h-full"
+              src={recipe.image}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              style={{ objectFit: "cover" }}
+              className="object-cover"
             />
           ) : (
             <span className="text-gray-400">Brak zdjęcia</span>

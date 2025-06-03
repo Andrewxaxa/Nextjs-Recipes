@@ -1,3 +1,5 @@
+import fs from "node:fs";
+
 import {
   IAddRecipePayload,
   IInstruction,
@@ -45,10 +47,17 @@ export const addRecipe = async (
 ): Promise<string> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const { title, description, instructions } = payload;
+  const { title, description, instructions, image } = payload;
   const id = createId();
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
+  const extension = image.name.split(".").pop();
+  const fileName = `${id}.${extension}`;
+
+  const arrayBuffer = await image.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  fs.writeFileSync(`public/images/${fileName}`, buffer);
 
   db.prepare(
     `
@@ -56,11 +65,19 @@ export const addRecipe = async (
         @id,
         @title,
         @description,
+        @image,
         @createdAt,
         @updatedAt
       );
     `,
-  ).run({ id, title, description, createdAt, updatedAt });
+  ).run({
+    id,
+    title,
+    description,
+    image: `/images/${fileName}`,
+    createdAt,
+    updatedAt,
+  });
 
   if (instructions && instructions.length > 0) {
     const insertInstruction = db.prepare(

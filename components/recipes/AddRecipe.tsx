@@ -9,6 +9,7 @@ import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
 import Submit from "@/components/ui/submit";
 import FormError from "../ui/form-error";
+import ImagePicker from "../ui/image-picker";
 
 const AddRecipe: React.FC = () => {
   const initialState: FormState = {
@@ -91,6 +92,8 @@ const AddRecipe: React.FC = () => {
             + Add instruction
           </Button>
         </div>
+        <ImagePicker />
+        <FormError error={state.errors.image} />
         <Submit />
       </Form>
     </div>

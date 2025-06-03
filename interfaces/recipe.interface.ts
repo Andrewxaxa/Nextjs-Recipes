@@ -9,7 +9,7 @@ export interface IRecipe {
   id: string;
   title: string;
   description: string;
-  image?: string;
+  image: string;
   instructions: IInstruction[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -18,6 +18,7 @@ export interface IRecipe {
 export interface IAddRecipePayload {
   title: string;
   description: string;
+  image: File;
   instructions: IAddInstructionPayload[];
 }
 
