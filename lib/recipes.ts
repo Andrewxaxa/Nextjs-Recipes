@@ -1,5 +1,3 @@
-import fs from "node:fs";
-
 import {
   IAddRecipePayload,
   IInstruction,
@@ -51,13 +49,6 @@ export const addRecipe = async (
   const id = createId();
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
-  const extension = image.name.split(".").pop();
-  const fileName = `${id}.${extension}`;
-
-  const arrayBuffer = await image.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
-  fs.writeFileSync(`public/images/${fileName}`, buffer);
 
   db.prepare(
     `
@@ -74,7 +65,7 @@ export const addRecipe = async (
     id,
     title,
     description,
-    image: `/images/${fileName}`,
+    image,
     createdAt,
     updatedAt,
   });

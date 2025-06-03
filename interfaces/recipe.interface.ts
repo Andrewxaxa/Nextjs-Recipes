@@ -18,7 +18,7 @@ export interface IRecipe {
 export interface IAddRecipePayload {
   title: string;
   description: string;
-  image: File;
+  image: string;
   instructions: IAddInstructionPayload[];
 }
 

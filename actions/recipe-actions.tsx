@@ -1,6 +1,7 @@
 "use server";
 
 import { IAddRecipePayload } from "@/interfaces/recipe.interface";
+import { uploadImage } from "@/lib/cloudinary";
 import { addRecipe } from "@/lib/recipes";
 import { revalidatePath } from "next/cache";
 
@@ -49,9 +50,9 @@ export const createRecipe = async (
     errors.description = "Description is required";
   }
 
-  // if (isInvalidText(image)) {
-  //   errors.image = "Image is required";
-  // }
+  if (!image || !(image instanceof File) || image.size === 0) {
+    errors.image = "Image is required";
+  }
 
   if (instructions.length === 0) {
     errors.instructions = "Add at least one instruction to the recipe";
@@ -61,10 +62,18 @@ export const createRecipe = async (
     return { errors };
   }
 
+  let imageUrl;
+
+  try {
+    imageUrl = await uploadImage(image);
+  } catch (error) {
+    throw new Error("Image upload failed");
+  }
+
   const payload: IAddRecipePayload = {
     title,
     description,
-    image,
+    image: imageUrl,
     instructions: instructions.map((text, idx) => ({
       step: idx,
       text,

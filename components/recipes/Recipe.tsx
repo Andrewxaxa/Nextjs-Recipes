@@ -30,7 +30,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
           </CardHeader>
           <CardBody>
             <p className="text-foreground mb-6">{recipe.description}</p>
-            <h2 className="text-xl text-foreground/80">Steps:</h2>
+            <h2 className="text-xl text-foreground/80 mb-2">Steps:</h2>
             <ol className="list-decimal list-inside space-y-2">
               {recipe.instructions
                 .sort((a, b) => a.step - b.step)

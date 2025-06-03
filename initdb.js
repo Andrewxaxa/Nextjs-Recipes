@@ -25,7 +25,7 @@ const dummyRecipes = [
     title: "Homemade Dumplings",
     description:
       "Tender dumplings filled with savory meat and vegetables, steamed to perfection.",
-    image: "/images/schnitzel.jpg",
+    image: "/images/dumplings.jpg",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
