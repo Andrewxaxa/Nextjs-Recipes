@@ -8,6 +8,7 @@ const dummyRecipes = [
     description:
       "A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.",
     image: "/images/cheeseburger.jpg",
+    imagePublicId: "123",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -17,6 +18,7 @@ const dummyRecipes = [
     description:
       "A rich and spicy curry, infused with exotic spices and creamy coconut milk.",
     image: "/images/curry.jpg",
+    imagePublicId: "123",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -26,6 +28,7 @@ const dummyRecipes = [
     description:
       "Tender dumplings filled with savory meat and vegetables, steamed to perfection.",
     image: "/images/dumplings.jpg",
+    imagePublicId: "123",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -95,6 +98,7 @@ db.prepare(
       title TEXT NOT NULL,
       description TEXT NOT NULL,
       image TEXT NOT NULL,
+      imagePublicId TEXT NOT NULL,
       createdAt TEXT,
       updatedAt TEXT
     );
@@ -121,6 +125,7 @@ function initData() {
         @title,
         @description,
         @image,
+        @imagePublicId,
         @createdAt,
         @updatedAt
       )

@@ -7,11 +7,13 @@ import Image from "next/image";
 interface ImagePickerProps {
   label?: string;
   name?: string;
+  currentImageUrl?: string;
 }
 
 const ImagePicker: React.FC<ImagePickerProps> = ({
   label = "Pick an image",
   name = "image",
+  currentImageUrl,
 }) => {
   const [pickedImage, setPickedImage] = useState<string | null>(null);
   const imageInput = useRef<HTMLInputElement>(null);
@@ -43,6 +45,16 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
     <div className="flex items-center gap-6">
       <div className="flex flex-col items-left gap-2">
         <div className="w-40 h-40 relative flex items-center justify-center bg-gray-100 rounded border border-gray-300 overflow-hidden">
+          {!pickedImage && currentImageUrl && (
+            <Image
+              alt="Recipe image"
+              src={currentImageUrl}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              style={{ objectFit: "cover" }}
+              className="object-cover"
+            />
+          )}
           {pickedImage ? (
             <Image
               alt="The image selected by the user"

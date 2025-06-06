@@ -27,5 +27,9 @@ export async function uploadImage(image: File) {
   const result = await cloudinary.uploader.upload(fileUri, {
     folder: "Nextjs-Recipes",
   });
-  return result.secure_url;
+  return { url: result.secure_url, publicId: result.public_id };
 }
+
+export const deleteImage = async (publicId: string) => {
+  return cloudinary.uploader.destroy(publicId);
+};

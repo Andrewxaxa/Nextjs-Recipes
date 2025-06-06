@@ -1,8 +1,11 @@
 "use server";
 
-import { IAddRecipePayload } from "@/interfaces/recipe.interface";
-import { uploadImage } from "@/lib/cloudinary";
-import { addRecipe } from "@/lib/recipes";
+import {
+  IAddRecipePayload,
+  IUpdateRecipePayload,
+} from "@/interfaces/recipe.interface";
+import { deleteImage, uploadImage } from "@/lib/cloudinary";
+import { addRecipe, updateRecipe } from "@/lib/recipes";
 import { revalidatePath } from "next/cache";
 
 export interface Errors {
@@ -63,25 +66,112 @@ export const createRecipe = async (
   }
 
   let imageUrl;
+  let imagePublicId;
 
   try {
-    imageUrl = await uploadImage(image);
+    const { url, publicId } = await uploadImage(image);
+    imageUrl = url;
+    imagePublicId = publicId;
   } catch (error) {
-    throw new Error("Image upload failed");
+    throw new Error(`Image upload failed: ${error}`);
   }
 
   const payload: IAddRecipePayload = {
     title,
     description,
     image: imageUrl,
+    imagePublicId,
     instructions: instructions.map((text, idx) => ({
       step: idx,
       text,
     })),
   };
 
-  response = await addRecipe(payload);
+  try {
+    response = await addRecipe(payload);
+  } catch (error) {
+    throw new Error(`Adding recipe failed: ${error}`);
+  }
 
   revalidatePath("/recipes");
+  return { errors, response };
+};
+
+export const editRecipe = async (prevState: FormState, formData: FormData) => {
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const image = formData.get("image") as File;
+  const currentImage = formData.get("currentImage") as string;
+  const currentImagePublicId = formData.get("currentImagePublicId") as string;
+  const instructions: string[] = [];
+  for (const [key, value] of formData.entries()) {
+    if (
+      key.startsWith("instruction-") &&
+      typeof value === "string" &&
+      value.trim() !== ""
+    ) {
+      instructions.push(value);
+    }
+  }
+
+  const errors: Errors = {};
+  let response = "";
+
+  if (isInvalidText(title)) {
+    errors.title = "Title is required";
+  }
+
+  if (isInvalidText(description)) {
+    errors.description = "Description is required";
+  }
+
+  if (instructions.length === 0) {
+    errors.instructions = "Add at least one instruction to the recipe";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors };
+  }
+
+  let imageUrl = currentImage;
+  let imagePublicId = currentImagePublicId;
+
+  if (image && image instanceof File && image.size > 0) {
+    console.log("new image detected");
+
+    try {
+      if (currentImagePublicId) {
+        console.log("deleting image");
+
+        await deleteImage(currentImagePublicId);
+      }
+      const { url, publicId } = await uploadImage(image);
+      imageUrl = url;
+      imagePublicId = publicId;
+    } catch (error) {
+      throw new Error(`Image upload failed: ${error}`);
+    }
+  }
+
+  const payload: IUpdateRecipePayload = {
+    id,
+    title,
+    description,
+    image: imageUrl,
+    imagePublicId,
+    instructions: instructions.map((text, idx) => ({
+      step: idx,
+      text,
+    })),
+  };
+
+  try {
+    response = await updateRecipe(payload);
+  } catch (error) {
+    throw new Error(`Recipe edit failed: ${error}`);
+  }
+
+  revalidatePath(`/recipes/${id}`);
   return { errors, response };
 };

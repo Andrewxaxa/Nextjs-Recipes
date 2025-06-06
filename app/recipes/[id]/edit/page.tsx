@@ -1,19 +1,17 @@
 import { getRecipe } from "@/lib/recipes";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import RecipeDetails from "@/components/recipes/Recipe";
+import EditRecipe from "@/components/recipes/EditRecipe";
 
 export const metadata: Metadata = {
   title: "Recipe details",
 };
 
-type RecipeDetailsPageProps = {
+type RecipeEditPageProps = {
   params: Promise<{ id: string }>;
 };
 
-const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
-  params,
-}) => {
+const RecipeEditPage: React.FC<RecipeEditPageProps> = async ({ params }) => {
   const { id } = await params;
   const recipe = await getRecipe(id);
 
@@ -21,7 +19,7 @@ const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
     notFound();
   }
 
-  return <RecipeDetails recipe={recipe} />;
+  return <EditRecipe recipe={recipe} />;
 };
 
-export default RecipeDetailsPage;
+export default RecipeEditPage;

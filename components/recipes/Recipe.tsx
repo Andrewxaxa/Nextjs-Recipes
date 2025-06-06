@@ -1,6 +1,8 @@
-import { IRecipe } from "@/interfaces/recipe.interface";
 import { Card, CardBody, CardHeader } from "@heroui/card";
+import { IRecipe } from "@/interfaces/recipe.interface";
+import { editIcon } from "../ui/icons";
 import Image from "next/image";
+import Link from "next/link";
 
 type RecipeDetailProps = {
   recipe: IRecipe;
@@ -11,6 +13,13 @@ const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
     <div className="max-w-2xl mx-auto py-8">
       <Card className="rounded-xl">
         <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden relative">
+          <Link
+            href={`/recipes/${recipe.id}/edit`}
+            className="absolute top-4 right-4 z-10 bg-white rounded-full shadow p-2 hover:bg-gray-100 transition"
+            title="Edit recipe"
+          >
+            {editIcon}
+          </Link>
           {recipe.image ? (
             <Image
               alt={recipe.title}

@@ -11,7 +11,7 @@ const RecipesPage: React.FC = async () => {
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Przepisy</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Recipes</h1>
       <RecipeList recipes={recipes} />
     </div>
   );

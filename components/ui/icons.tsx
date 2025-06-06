@@ -118,3 +118,37 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+export const editIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5 text-gray-600"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-2.828 0L9 13zm0 0V17h4"
+    />
+  </svg>
+);
+
+export const emptyIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-16 w-16 mb-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 17v-2a4 4 0 018 0v2M5 21h14a2 2 0 002-2v-7a2 2 0 00-2-2h-1V7a5 5 0 00-10 0v3H5a2 2 0 00-2 2v7a2 2 0 002 2z"
+    />
+  </svg>
+);
