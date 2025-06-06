@@ -9,24 +9,27 @@ import DeleteRecipe from "./delete-recipe";
 import { IRecipe } from "@/interfaces/recipe.interface";
 
 type RecipeDetailProps = {
+  userId?: string;
   recipe: IRecipe;
 };
 
-const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
+const RecipeDetails = ({ userId, recipe }: RecipeDetailProps) => {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <Card className="rounded-xl">
         <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden relative">
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <Link
-              className="bg-white rounded-full shadow p-2 hover:bg-gray-100 transition"
-              href={`/recipes/${recipe.id}/edit`}
-              title="Edit recipe"
-            >
-              {editIcon}
-            </Link>
-            <DeleteRecipe id={recipe.id} />
-          </div>
+          {userId && (
+            <div className="absolute top-4 right-4 z-10 flex gap-2">
+              <Link
+                className="bg-white rounded-full shadow p-2 hover:bg-gray-100 transition"
+                href={`/recipes/${recipe.id}/edit`}
+                title="Edit recipe"
+              >
+                {editIcon}
+              </Link>
+              <DeleteRecipe id={recipe.id} />
+            </div>
+          )}
           {recipe.image ? (
             <Image
               fill

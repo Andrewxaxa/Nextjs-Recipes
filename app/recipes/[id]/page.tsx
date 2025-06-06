@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getRecipe } from "@/lib/recipes";
+import { currentUser } from "@clerk/nextjs/server";
 import RecipeDetails from "@/components/recipes/recipe";
 
 export const metadata: Metadata = {
@@ -15,14 +16,15 @@ type RecipeDetailsPageProps = {
 const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
   params,
 }) => {
-  const { id } = await params;
-  const recipe = await getRecipe(id);
+  const userObj = await currentUser();
+  const { id: recipeId } = await params;
+  const recipe = await getRecipe(recipeId);
 
   if (!recipe) {
     notFound();
   }
 
-  return <RecipeDetails recipe={recipe} />;
+  return <RecipeDetails userId={userObj?.id} recipe={recipe} />;
 };
 
 export default RecipeDetailsPage;

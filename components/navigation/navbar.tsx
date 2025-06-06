@@ -17,6 +17,13 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/navigation/theme-switch";
 import { GithubIcon, SearchIcon, Logo } from "@/components/ui/icons";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 export const Navbar = () => {
   const searchInput = (
@@ -78,6 +85,16 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
+        <SignedOut>
+          <NavbarItem className="sm:flex">
+            <SignInButton mode="modal" />
+          </NavbarItem>
+        </SignedOut>
+        <SignedIn>
+          <NavbarItem className="sm:flex">
+            <UserButton />
+          </NavbarItem>
+        </SignedIn>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
