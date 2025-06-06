@@ -1,12 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import {
   IAddRecipePayload,
   IUpdateRecipePayload,
 } from "@/interfaces/recipe.interface";
 import { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { addRecipe, removeRecipe, updateRecipe } from "@/lib/recipes";
-import { revalidatePath } from "next/cache";
 
 export interface Errors {
   title?: string;
@@ -32,6 +33,7 @@ export const createRecipe = async (
   const description = formData.get("description") as string;
   const image = formData.get("image") as File;
   const instructions: string[] = [];
+
   for (const [key, value] of formData.entries()) {
     if (
       key.startsWith("instruction-") &&
@@ -70,6 +72,7 @@ export const createRecipe = async (
 
   try {
     const { url, publicId } = await uploadImage(image);
+
     imageUrl = url;
     imagePublicId = publicId;
   } catch (error) {
@@ -94,6 +97,7 @@ export const createRecipe = async (
   }
 
   revalidatePath("/recipes");
+
   return { errors, response };
 };
 
@@ -105,6 +109,7 @@ export const editRecipe = async (prevState: FormState, formData: FormData) => {
   const currentImage = formData.get("currentImage") as string;
   const currentImagePublicId = formData.get("currentImagePublicId") as string;
   const instructions: string[] = [];
+
   for (const [key, value] of formData.entries()) {
     if (
       key.startsWith("instruction-") &&
@@ -140,11 +145,10 @@ export const editRecipe = async (prevState: FormState, formData: FormData) => {
   if (image && image instanceof File && image.size > 0) {
     try {
       if (currentImagePublicId) {
-        console.log("deleting image");
-
         await deleteImage(currentImagePublicId);
       }
       const { url, publicId } = await uploadImage(image);
+
       imageUrl = url;
       imagePublicId = publicId;
     } catch (error) {
@@ -171,6 +175,7 @@ export const editRecipe = async (prevState: FormState, formData: FormData) => {
   }
 
   revalidatePath(`/recipes/${id}`);
+
   return { errors, response };
 };
 

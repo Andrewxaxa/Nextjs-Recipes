@@ -2,15 +2,17 @@
 
 import { Input, Textarea } from "@heroui/input";
 import { Form } from "@heroui/form";
-import { editRecipe, FormState } from "@/actions/recipe-actions";
 import { useActionState, useEffect, useState } from "react";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
-import { IRecipe } from "@/interfaces/recipe.interface";
-import Submit from "@/components/ui/submit";
+
 import FormError from "../ui/form-error";
 import ImagePicker from "../ui/image-picker";
+
+import { IRecipe } from "@/interfaces/recipe.interface";
+import Submit from "@/components/ui/submit";
+import { editRecipe, FormState } from "@/actions/recipe-actions";
 
 interface EditRecipeProps {
   recipe: IRecipe;
@@ -34,6 +36,7 @@ const EditRecipe: React.FC<EditRecipeProps> = ({ recipe }) => {
 
   const handleInstructionChange = (idx: number, value: string) => {
     const updated = [...instructions];
+
     updated[idx] = value;
     setInstructions(updated);
   };
@@ -54,52 +57,52 @@ const EditRecipe: React.FC<EditRecipeProps> = ({ recipe }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <Form className="w-full max-w-xs" action={formAction}>
-        <input type="hidden" name="id" value={recipe.id} />
-        <input type="hidden" name="currentImage" value={recipe.image} />
+      <Form action={formAction} className="w-full max-w-xs">
+        <input name="id" type="hidden" value={recipe.id} />
+        <input name="currentImage" type="hidden" value={recipe.image} />
         <input
-          type="hidden"
           name="currentImagePublicId"
+          type="hidden"
           value={recipe.imagePublicId}
         />
         <Input
-          name="title"
-          label="Title"
           isRequired
-          errorMessage="Please enter a recipe title"
-          labelPlacement="outside"
-          placeholder="Recipe title"
           defaultValue={recipe.title}
+          errorMessage="Please enter a recipe title"
+          label="Title"
+          labelPlacement="outside"
+          name="title"
+          placeholder="Recipe title"
         />
         <FormError error={state.errors.title} />
         <Textarea
-          className="max-w-xs"
-          name="description"
-          label="Description"
           isRequired
-          errorMessage="Please enter a recipe description"
-          labelPlacement="outside"
-          placeholder="Recipe description"
+          className="max-w-xs"
           defaultValue={recipe.description}
+          errorMessage="Please enter a recipe description"
+          label="Description"
+          labelPlacement="outside"
+          name="description"
+          placeholder="Recipe description"
         />
         <FormError error={state.errors.description} />
         <div className="mb-4 w-full">
-          <label className="block font-medium mb-1">Recipe steps</label>
+          <p className="block font-medium mb-1">Recipe steps</p>
           <FormError error={state.errors.instructions} />
           {instructions.map((text, idx) => (
             <div key={idx} className="mb-4">
               <Textarea
                 className="flex-1 mb-2"
-                name={`instruction-${idx}`}
-                value={text}
                 labelPlacement="outside"
+                name={`instruction-${idx}`}
                 placeholder={`Step ${idx + 1}`}
+                value={text}
                 onChange={(e) => handleInstructionChange(idx, e.target.value)}
               />
               {instructions.length > 1 && (
                 <Button
-                  variant="bordered"
                   color="danger"
+                  variant="bordered"
                   onPress={() => removeInstruction(idx)}
                 >
                   - Remove
@@ -107,7 +110,7 @@ const EditRecipe: React.FC<EditRecipeProps> = ({ recipe }) => {
               )}
             </div>
           ))}
-          <Button variant="bordered" color="secondary" onPress={addInstruction}>
+          <Button color="secondary" variant="bordered" onPress={addInstruction}>
             + Add instruction
           </Button>
         </div>

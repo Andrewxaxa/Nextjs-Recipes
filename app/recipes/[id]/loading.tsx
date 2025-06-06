@@ -1,5 +1,6 @@
-import Loader from "@/components/ui/loader";
 import React from "react";
+
+import Loader from "@/components/ui/loader";
 
 const Loading = () => {
   return <Loader />;

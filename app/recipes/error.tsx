@@ -1,7 +1,8 @@
 "use client";
 
-import ErrorComponent from "@/components/ui/error-component";
 import React from "react";
+
+import ErrorComponent from "@/components/ui/error-component";
 
 interface ErrorProps {
   error: Error & { digest?: string };

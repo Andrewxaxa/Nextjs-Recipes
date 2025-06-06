@@ -1,9 +1,12 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
-import { IRecipe } from "@/interfaces/recipe.interface";
-import { editIcon } from "../ui/icons";
 import Image from "next/image";
 import Link from "next/link";
+
+import { editIcon } from "../ui/icons";
+
 import DeleteRecipe from "./delete-recipe";
+
+import { IRecipe } from "@/interfaces/recipe.interface";
 
 type RecipeDetailProps = {
   recipe: IRecipe;
@@ -16,8 +19,8 @@ const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
         <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden relative">
           <div className="absolute top-4 right-4 z-10 flex gap-2">
             <Link
-              href={`/recipes/${recipe.id}/edit`}
               className="bg-white rounded-full shadow p-2 hover:bg-gray-100 transition"
+              href={`/recipes/${recipe.id}/edit`}
               title="Edit recipe"
             >
               {editIcon}
@@ -26,12 +29,12 @@ const RecipeDetails = ({ recipe }: RecipeDetailProps) => {
           </div>
           {recipe.image ? (
             <Image
-              alt={recipe.title}
-              src={recipe.image}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              style={{ objectFit: "cover" }}
+              alt={recipe.title}
               className="object-cover"
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              src={recipe.image}
+              style={{ objectFit: "cover" }}
             />
           ) : (
             <span className="text-gray-400">Brak zdjęcia</span>

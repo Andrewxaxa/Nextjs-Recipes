@@ -122,46 +122,46 @@ export const SearchIcon = (props: IconSvgProps) => (
 export const editIcon = (
   <svg
     className="h-5 w-5 text-gray-600"
-    xmlns="http://www.w3.org/2000/svg"
+    height="1em"
     viewBox="0 0 24 24"
     width="1em"
-    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill="currentColor"
       d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-    ></path>
+      fill="currentColor"
+    />
   </svg>
 );
 
 export const trashIcon = (
   <svg
     className="h-5 w-5 text-gray-600"
-    xmlns="http://www.w3.org/2000/svg"
+    height="1em"
     viewBox="0 0 16 16"
     width="1em"
-    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <g fill="currentColor">
-      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
-      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
     </g>
   </svg>
 );
 
 export const emptyIcon = (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     className="h-16 w-16 mb-4"
     fill="none"
-    viewBox="0 0 24 24"
     stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
+      d="M9 17v-2a4 4 0 018 0v2M5 21h14a2 2 0 002-2v-7a2 2 0 00-2-2h-1V7a5 5 0 00-10 0v3H5a2 2 0 00-2 2v7a2 2 0 002 2z"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M9 17v-2a4 4 0 018 0v2M5 21h14a2 2 0 002-2v-7a2 2 0 00-2-2h-1V7a5 5 0 00-10 0v3H5a2 2 0 00-2 2v7a2 2 0 002 2z"
     />
   </svg>
 );

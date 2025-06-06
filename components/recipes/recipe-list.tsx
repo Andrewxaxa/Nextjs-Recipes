@@ -1,6 +1,8 @@
-import { IRecipe } from "@/interfaces/recipe.interface";
-import RecipeCard from "./recipe-card";
 import Empty from "../ui/empty";
+
+import RecipeCard from "./recipe-card";
+
+import { IRecipe } from "@/interfaces/recipe.interface";
 
 type RecipeListProps = {
   recipes: IRecipe[];

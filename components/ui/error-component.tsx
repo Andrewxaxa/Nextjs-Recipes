@@ -10,8 +10,8 @@ const ErrorComponent: React.FC<ErrorProps> = ({ error }) => {
       <h1 className="text-3xl font-bold mb-4">Wystąpił błąd</h1>
       <p className="mb-2 text-red-600">{error.message}</p>
       <Link
-        href="/"
         className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        href="/"
       >
         Powrót na stronę główną
       </Link>

@@ -2,14 +2,16 @@
 
 import { Input, Textarea } from "@heroui/input";
 import { Form } from "@heroui/form";
-import { createRecipe, FormState } from "@/actions/recipe-actions";
 import { useActionState, useEffect, useState } from "react";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
-import Submit from "@/components/ui/submit";
+
 import FormError from "../ui/form-error";
 import ImagePicker from "../ui/image-picker";
+
+import Submit from "@/components/ui/submit";
+import { createRecipe, FormState } from "@/actions/recipe-actions";
 
 const AddRecipe: React.FC = () => {
   const initialState: FormState = {
@@ -24,6 +26,7 @@ const AddRecipe: React.FC = () => {
 
   const handleInstructionChange = (idx: number, value: string) => {
     const updated = [...instructions];
+
     updated[idx] = value;
     setInstructions(updated);
   };
@@ -44,43 +47,43 @@ const AddRecipe: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <Form className="w-full max-w-xs" action={formAction}>
+      <Form action={formAction} className="w-full max-w-xs">
         <Input
-          name="title"
-          label="Title"
           isRequired
           errorMessage="Please enter a recipe title"
+          label="Title"
           labelPlacement="outside"
+          name="title"
           placeholder="Recipe title"
         />
         <FormError error={state.errors.title} />
         <Textarea
-          className="max-w-xs"
-          name="description"
-          label="Description"
           isRequired
+          className="max-w-xs"
           errorMessage="Please enter a recipe description"
+          label="Description"
           labelPlacement="outside"
+          name="description"
           placeholder="Recipe description"
         />
         <FormError error={state.errors.description} />
         <div className="mb-4 w-full">
-          <label className="block font-medium mb-1">Recipe steps</label>
+          <p className="block font-medium mb-1">Recipe steps</p>
           <FormError error={state.errors.instructions} />
           {instructions.map((text, idx) => (
             <div key={idx} className="mb-4">
               <Textarea
                 className="flex-1 mb-2"
-                name={`instruction-${idx}`}
-                value={text}
                 labelPlacement="outside"
+                name={`instruction-${idx}`}
                 placeholder={`Step ${idx + 1}`}
+                value={text}
                 onChange={(e) => handleInstructionChange(idx, e.target.value)}
               />
               {instructions.length > 1 && (
                 <Button
-                  variant="bordered"
                   color="danger"
+                  variant="bordered"
                   onPress={() => removeInstruction(idx)}
                 >
                   - Remove
@@ -88,7 +91,7 @@ const AddRecipe: React.FC = () => {
               )}
             </div>
           ))}
-          <Button variant="bordered" color="secondary" onPress={addInstruction}>
+          <Button color="secondary" variant="bordered" onPress={addInstruction}>
             + Add instruction
           </Button>
         </div>

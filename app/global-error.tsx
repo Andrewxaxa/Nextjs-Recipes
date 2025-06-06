@@ -17,8 +17,8 @@ const GlobalError = () => {
       </p>
       <div className="flex gap-4">
         <button
-          onClick={handleReload}
           className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          onClick={handleReload}
         >
           Reload
         </button>

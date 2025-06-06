@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import { trashIcon } from "../ui/icons";
 import {
   Modal,
   ModalContent,
@@ -13,8 +12,11 @@ import {
 import { useTransition } from "react";
 import { addToast } from "@heroui/toast";
 import { useRouter } from "next/navigation";
-import { deleteRecipe } from "@/actions/recipe-actions";
 import { Spinner } from "@heroui/spinner";
+
+import { trashIcon } from "../ui/icons";
+
+import { deleteRecipe } from "@/actions/recipe-actions";
 
 interface DeleteRecipeProps {
   id: string;
@@ -36,7 +38,7 @@ const DeleteRecipe: React.FC<DeleteRecipeProps> = ({ id }) => {
         router.push("/recipes");
       } catch (error) {
         addToast({
-          title: "Recipe deletion failed",
+          title: `Recipe deletion failed: ${error}`,
           color: "danger",
         });
       }

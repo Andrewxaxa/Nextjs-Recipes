@@ -1,11 +1,12 @@
+import { createId } from "@paralleldrive/cuid2";
+import sql from "better-sqlite3";
+
 import {
   IAddRecipePayload,
   IInstruction,
   IRecipe,
   IUpdateRecipePayload,
 } from "@/interfaces/recipe.interface";
-import { createId } from "@paralleldrive/cuid2";
-import sql from "better-sqlite3";
 const db = sql("app.db");
 
 export const getRecipes = async (): Promise<IRecipe[]> => {
@@ -19,6 +20,7 @@ export const getRecipes = async (): Promise<IRecipe[]> => {
         "SELECT * FROM instructions WHERE recipeId = ? ORDER BY step ASC",
       )
       .all(recipe.id) as IInstruction[];
+
     recipe.instructions = instructions;
   }
 

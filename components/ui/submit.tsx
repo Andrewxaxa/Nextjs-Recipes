@@ -9,10 +9,10 @@ const Submit: React.FC = () => {
   return (
     <Button
       className="mt-2"
-      type="submit"
       color="primary"
       disabled={pending}
       isLoading={pending}
+      type="submit"
     >
       Submit
     </Button>

@@ -1,6 +1,7 @@
-import { getRecipe } from "@/lib/recipes";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+import { getRecipe } from "@/lib/recipes";
 import EditRecipe from "@/components/recipes/edit-recipe";
 
 export const metadata: Metadata = {

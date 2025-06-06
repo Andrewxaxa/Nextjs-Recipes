@@ -27,10 +27,12 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
 
     if (!file) {
       setPickedImage(null);
+
       return;
     }
 
     const fileReader = new FileReader();
+
     fileReader.onload = () => {
       if (typeof fileReader.result === "string") {
         setPickedImage(fileReader.result);
@@ -47,20 +49,20 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
         <div className="w-40 h-40 relative flex items-center justify-center bg-gray-100 rounded border border-gray-300 overflow-hidden">
           {!pickedImage && currentImageUrl && (
             <Image
-              alt="Recipe image"
-              src={currentImageUrl}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              style={{ objectFit: "cover" }}
+              alt="Recipe image"
               className="object-cover"
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              src={currentImageUrl}
+              style={{ objectFit: "cover" }}
             />
           )}
           {pickedImage ? (
             <Image
-              alt="The image selected by the user"
-              src={pickedImage}
               fill
+              alt="The image selected by the user"
               className="object-cover"
+              src={pickedImage}
             />
           ) : (
             <span className="text-gray-400 text-center px-2">
@@ -68,16 +70,16 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
             </span>
           )}
         </div>
-        <Button type="button" color="secondary" onPress={handleImagePick}>
+        <Button color="secondary" type="button" onPress={handleImagePick}>
           {label}
         </Button>
         <input
-          type="file"
+          ref={imageInput}
           accept="image/png, image/jpeg"
+          className="hidden"
           id={name}
           name={name}
-          className="hidden"
-          ref={imageInput}
+          type="file"
           onChange={handleImageChange}
         />
       </div>
