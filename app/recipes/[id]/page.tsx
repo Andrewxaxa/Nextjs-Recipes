@@ -1,7 +1,7 @@
 import { getRecipe } from "@/lib/recipes";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import RecipeDetails from "@/components/recipes/Recipe";
+import RecipeDetails from "@/components/recipes/recipe";
 
 export const metadata: Metadata = {
   title: "Recipe details",

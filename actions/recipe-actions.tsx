@@ -5,7 +5,7 @@ import {
   IUpdateRecipePayload,
 } from "@/interfaces/recipe.interface";
 import { deleteImage, uploadImage } from "@/lib/cloudinary";
-import { addRecipe, updateRecipe } from "@/lib/recipes";
+import { addRecipe, removeRecipe, updateRecipe } from "@/lib/recipes";
 import { revalidatePath } from "next/cache";
 
 export interface Errors {
@@ -138,8 +138,6 @@ export const editRecipe = async (prevState: FormState, formData: FormData) => {
   let imagePublicId = currentImagePublicId;
 
   if (image && image instanceof File && image.size > 0) {
-    console.log("new image detected");
-
     try {
       if (currentImagePublicId) {
         console.log("deleting image");
@@ -174,4 +172,18 @@ export const editRecipe = async (prevState: FormState, formData: FormData) => {
 
   revalidatePath(`/recipes/${id}`);
   return { errors, response };
+};
+
+export const deleteRecipe = async (id: string) => {
+  let response = "";
+
+  try {
+    response = await removeRecipe(id);
+  } catch (error) {
+    throw new Error(`Recipe deletion failed: ${error}`);
+  }
+
+  revalidatePath("/recipes");
+
+  return response;
 };

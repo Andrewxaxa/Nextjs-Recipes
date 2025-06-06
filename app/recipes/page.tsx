@@ -1,6 +1,6 @@
 import { getRecipes } from "@/lib/recipes";
 import { Metadata } from "next";
-import RecipeList from "@/components/recipes/RecipeList";
+import RecipeList from "@/components/recipes/recipe-list";
 
 export const metadata: Metadata = {
   title: "Recipes list",

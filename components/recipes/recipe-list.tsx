@@ -1,5 +1,5 @@
 import { IRecipe } from "@/interfaces/recipe.interface";
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "./recipe-card";
 import Empty from "../ui/empty";
 
 type RecipeListProps = {

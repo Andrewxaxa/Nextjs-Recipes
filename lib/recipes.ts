@@ -152,3 +152,13 @@ export const updateRecipe = async (
 
   return "Recipe updated";
 };
+
+export const removeRecipe = async (id: string): Promise<string> => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  db.prepare("DELETE FROM instructions WHERE recipeId = ?;").run(id);
+
+  db.prepare("DELETE FROM recipes WHERE id = ?;").run(id);
+
+  return "Recipe deleted";
+};
