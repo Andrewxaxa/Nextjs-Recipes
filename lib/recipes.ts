@@ -9,10 +9,18 @@ import {
 } from "@/interfaces/recipe.interface";
 const db = sql("app.db");
 
-export const getRecipes = async (): Promise<IRecipe[]> => {
+export const getRecipes = async (q = ""): Promise<IRecipe[]> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const recipes = db.prepare("SELECT * FROM recipes").all() as IRecipe[];
+  let recipes: IRecipe[];
+
+  if (q.trim()) {
+    recipes = db
+      .prepare("SELECT * FROM recipes WHERE title LIKE ? OR description LIKE ?")
+      .all(`%${q}%`, `%${q}%`) as IRecipe[];
+  } else {
+    recipes = db.prepare("SELECT * FROM recipes").all() as IRecipe[];
+  }
 
   for (const recipe of recipes) {
     const instructions = db
