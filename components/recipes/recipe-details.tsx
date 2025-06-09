@@ -5,6 +5,7 @@ import Link from "next/link";
 import { editIcon } from "../ui/icons";
 
 import DeleteRecipe from "./delete-recipe";
+import LikeButton from "./like-button";
 
 import { IRecipe } from "@/interfaces/recipe.interface";
 
@@ -12,12 +13,21 @@ type RecipeDetailProps = {
   userId?: string;
   recipe: IRecipe;
   redirectUrl: string;
+  isFav: boolean;
 };
 
-const RecipeDetails = ({ userId, recipe, redirectUrl }: RecipeDetailProps) => {
+const RecipeDetails = ({
+  userId,
+  recipe,
+  redirectUrl,
+  isFav,
+}: RecipeDetailProps) => {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <Card className="rounded-xl">
+        <div className="absolute top-4 left-4 z-20">
+          <LikeButton isFav={isFav} recipeId={recipe.id} userId={userId} />
+        </div>
         <div className="h-64 bg-gray-100 flex items-center justify-center rounded-t-xl overflow-hidden relative">
           {userId && (
             <div className="absolute top-4 right-4 z-10 flex gap-2">

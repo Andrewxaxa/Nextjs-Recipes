@@ -1,6 +1,7 @@
+import { Metadata } from "next";
+
 import RecipeList from "@/components/recipes/recipe-list";
 import { getRecipes } from "@/lib/recipes";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Search recipes",
@@ -17,7 +18,7 @@ const SearchPage: React.FC<SearchProps> = async ({ params }) => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6 text-center">
-        Search for "{q}" recipes:
+        Search for &quot;{q}&quot; recipes:
       </h1>
       <RecipeList recipes={recipes} redirectUrl="recipes" />
     </div>

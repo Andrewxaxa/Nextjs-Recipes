@@ -8,7 +8,13 @@ import {
   IUpdateRecipePayload,
 } from "@/interfaces/recipe.interface";
 import { deleteImage, uploadImage } from "@/lib/cloudinary";
-import { addRecipe, removeRecipe, updateRecipe } from "@/lib/recipes";
+import {
+  addFavorite,
+  addRecipe,
+  removeFavorite,
+  removeRecipe,
+  updateRecipe,
+} from "@/lib/recipes";
 
 export interface Errors {
   title?: string;
@@ -207,4 +213,12 @@ export const deleteRecipe = async (id: string) => {
   revalidatePath("/recipes");
 
   return response;
+};
+
+export const favoriteRecipe = async (userId: string, recipeId: string) => {
+  await addFavorite(userId, recipeId);
+};
+
+export const unfavoriteRecipe = async (userId: string, recipeId: string) => {
+  await removeFavorite(userId, recipeId);
 };

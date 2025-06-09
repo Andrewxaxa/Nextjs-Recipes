@@ -13,10 +13,11 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
+import SearchInput from "./search-input";
+
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/navigation/theme-switch";
 import { GithubIcon, Logo } from "@/components/ui/icons";
-import SearchInput from "./search-input";
 
 export const Navbar = () => {
   return (

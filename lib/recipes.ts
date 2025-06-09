@@ -195,3 +195,56 @@ export const removeRecipe = async (id: string): Promise<string> => {
 
   return "Recipe deleted";
 };
+
+export const addFavorite = async (
+  userId: string,
+  recipeId: string,
+): Promise<void> => {
+  db.prepare(
+    `INSERT OR IGNORE INTO favorites (userId, recipeId) VALUES (?, ?);`,
+  ).run(userId, recipeId);
+};
+
+export const removeFavorite = async (
+  userId: string,
+  recipeId: string,
+): Promise<void> => {
+  db.prepare(`DELETE FROM favorites WHERE userId = ? and recipeId = ?;`).run(
+    userId,
+    recipeId,
+  );
+};
+
+export const getFavoriteRecipes = async (
+  userId: string,
+): Promise<IRecipe[]> => {
+  const recipes = db
+    .prepare(
+      `
+      SELECT * from recipes
+      INNER JOIN favorites ON recipes.id = favorites.recipeId
+      WHERE favorites.userId = ?
+    `,
+    )
+    .all(userId) as IRecipe[];
+
+  for (const recipe of recipes) {
+    const instructions = db
+      .prepare(
+        "SELECT * FROM instructions WHERE recipeId = ? ORDER BY step ASC",
+      )
+      .all(recipe.id) as IInstruction[];
+
+    recipe.instructions = instructions;
+  }
+
+  return recipes;
+};
+
+export const isFavorite = (userId: string, recipeId: string): boolean => {
+  const row = db
+    .prepare(`SELECT 1 FROM favorites WHERE userId = ? AND recipeId = ?`)
+    .get(userId, recipeId);
+
+  return !!row;
+};

@@ -121,6 +121,17 @@ db.prepare(
   `,
 ).run();
 
+db.prepare(
+  `
+    CREATE TABLE IF NOT EXISTS favorites (
+      userId TEXT NOT NULL,
+      recipeId TEXT NOT NULL,
+      PRIMARY KEY (userId, recipeId),
+      FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    );
+  `,
+).run();
+
 function initData() {
   const recipesData = db.prepare(
     `

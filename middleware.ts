@@ -5,6 +5,7 @@ const isProtectedRoute = createRouteMatcher([
   "/recipes/:id/edit",
   "/my-recipes",
   "/my-recipes/:id",
+  "/favorite-recipes",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 
 import { getRecipe } from "@/lib/recipes";
-import RecipeDetails from "@/components/recipes/recipe";
+import RecipeDetails from "@/components/recipes/recipe-details";
 
 export const metadata: Metadata = {
   title: "Recipe details",

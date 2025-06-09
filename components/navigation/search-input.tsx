@@ -1,9 +1,10 @@
 "use client";
 
 import { Input } from "@heroui/input";
-import { SearchIcon } from "../ui/icons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import { SearchIcon } from "../ui/icons";
 
 const SearchInput: React.FC = () => {
   const router = useRouter();
