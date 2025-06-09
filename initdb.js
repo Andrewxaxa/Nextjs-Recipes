@@ -4,6 +4,7 @@ const db = sql("app.db");
 const dummyRecipes = [
   {
     id: "1",
+    userId: "1",
     title: "Juicy Cheese Burger",
     description:
       "A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.",
@@ -14,6 +15,7 @@ const dummyRecipes = [
   },
   {
     id: "2",
+    userId: "1",
     title: "Spicy Curry",
     description:
       "A rich and spicy curry, infused with exotic spices and creamy coconut milk.",
@@ -24,6 +26,7 @@ const dummyRecipes = [
   },
   {
     id: "3",
+    userId: "1",
     title: "Homemade Dumplings",
     description:
       "Tender dumplings filled with savory meat and vegetables, steamed to perfection.",
@@ -95,6 +98,7 @@ db.prepare(
   `
     CREATE TABLE IF NOT EXISTS recipes (
       id TEXT PRIMARY KEY,
+      userId TEXT NOT NULL,
       title TEXT NOT NULL,
       description TEXT NOT NULL,
       image TEXT NOT NULL,
@@ -122,6 +126,7 @@ function initData() {
     `
       INSERT INTO recipes VALUES (
         @id,
+        @userId,
         @title,
         @description,
         @image,

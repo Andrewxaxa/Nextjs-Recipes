@@ -17,6 +17,10 @@ export const siteConfig = {
       href: "/add-recipe",
     },
     {
+      label: "My recipes",
+      href: "/my-recipes",
+    },
+    {
       label: "About",
       href: "/about",
     },
@@ -35,12 +39,8 @@ export const siteConfig = {
       href: "/about",
     },
     {
-      label: "Profile",
-      href: "/profile",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "My recipes",
+      href: "/my-recipes",
     },
   ],
   links: {

@@ -17,6 +17,7 @@ export interface IRecipe {
 }
 
 export interface IAddRecipePayload {
+  userId: string;
   title: string;
   description: string;
   image: string;
@@ -29,7 +30,11 @@ export interface IAddInstructionPayload {
   text: string;
 }
 
-export interface IUpdateRecipePayload extends IAddRecipePayload {
+export interface IUpdateRecipePayload {
   id: string;
+  title: string;
+  description: string;
+  image: string;
   imagePublicId: string;
+  instructions: IAddInstructionPayload[];
 }

@@ -25,7 +25,11 @@ const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
   }
 
   return (
-    <RecipeDetails recipe={recipe} redirectUrl="recipes" userId={userObj?.id} />
+    <RecipeDetails
+      recipe={recipe}
+      redirectUrl="my-recipes"
+      userId={userObj?.id}
+    />
   );
 };
 

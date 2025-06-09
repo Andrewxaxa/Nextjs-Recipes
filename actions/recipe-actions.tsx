@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { currentUser } from "@clerk/nextjs/server";
 
 import {
   IAddRecipePayload,
@@ -29,6 +30,13 @@ export const createRecipe = async (
   prevState: FormState,
   formData: FormData,
 ) => {
+  const userObj = await currentUser();
+  const userId = userObj?.id;
+
+  if (!userId) {
+    throw new Error("User must be signed in to add a recipe");
+  }
+
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const image = formData.get("image") as File;
@@ -80,6 +88,7 @@ export const createRecipe = async (
   }
 
   const payload: IAddRecipePayload = {
+    userId,
     title,
     description,
     image: imageUrl,
@@ -102,6 +111,13 @@ export const createRecipe = async (
 };
 
 export const editRecipe = async (prevState: FormState, formData: FormData) => {
+  const userObj = await currentUser();
+  const userId = userObj?.id;
+
+  if (!userId) {
+    throw new Error("User must be signed in to add a recipe");
+  }
+
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;

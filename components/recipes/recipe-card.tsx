@@ -6,13 +6,14 @@ import { IRecipe } from "@/interfaces/recipe.interface";
 
 interface RecipeCardProps {
   recipe: IRecipe;
+  redirectUrl: string;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, redirectUrl }) => {
   return (
     <Link
       className="transition-shadow cursor-pointer rounded-xl hover:shadow-lg hover:shadow-gray-300"
-      href={`/recipes/${recipe.id}`}
+      href={`/${redirectUrl}/${recipe.id}`}
       style={{ display: "block" }}
     >
       <Card className="rounded-xl">

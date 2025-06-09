@@ -11,14 +11,15 @@ import FormError from "../ui/form-error";
 import ImagePicker from "../ui/image-picker";
 
 import { IRecipe } from "@/interfaces/recipe.interface";
-import Submit from "@/components/ui/submit";
 import { editRecipe, FormState } from "@/actions/recipe-actions";
+import Submit from "@/components/ui/submit";
 
 interface EditRecipeProps {
   recipe: IRecipe;
+  redirectUrl: string;
 }
 
-const EditRecipe: React.FC<EditRecipeProps> = ({ recipe }) => {
+const EditRecipe: React.FC<EditRecipeProps> = ({ recipe, redirectUrl }) => {
   const initialState: FormState = {
     errors: {},
     response: "",
@@ -51,7 +52,7 @@ const EditRecipe: React.FC<EditRecipeProps> = ({ recipe }) => {
         title: "Recipe edited successfully",
         color: "success",
       });
-      router.push(`/recipes/${recipe.id}`);
+      router.push(`/${redirectUrl}/${recipe.id}`);
     }
   }, [state]);
 

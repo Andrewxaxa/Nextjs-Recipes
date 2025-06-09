@@ -12,7 +12,27 @@ const db = sql("app.db");
 export const getRecipes = async (): Promise<IRecipe[]> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const recipes = db.prepare("SELECT * FROM recipes ").all() as IRecipe[];
+  const recipes = db.prepare("SELECT * FROM recipes").all() as IRecipe[];
+
+  for (const recipe of recipes) {
+    const instructions = db
+      .prepare(
+        "SELECT * FROM instructions WHERE recipeId = ? ORDER BY step ASC",
+      )
+      .all(recipe.id) as IInstruction[];
+
+    recipe.instructions = instructions;
+  }
+
+  return recipes;
+};
+
+export const getUserRecipes = async (userId: string): Promise<IRecipe[]> => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const recipes = db
+    .prepare("SELECT * FROM recipes WHERE userId = ?")
+    .all(userId) as IRecipe[];
 
   for (const recipe of recipes) {
     const instructions = db
@@ -48,7 +68,8 @@ export const addRecipe = async (
 ): Promise<string> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const { title, description, instructions, image, imagePublicId } = payload;
+  const { userId, title, description, instructions, image, imagePublicId } =
+    payload;
   const id = createId();
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
@@ -57,6 +78,7 @@ export const addRecipe = async (
     `
       INSERT INTO recipes VALUES (
         @id,
+        @userId,
         @title,
         @description,
         @image,
@@ -67,6 +89,7 @@ export const addRecipe = async (
     `,
   ).run({
     id,
+    userId,
     title,
     description,
     image,

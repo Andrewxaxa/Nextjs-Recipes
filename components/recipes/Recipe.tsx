@@ -11,9 +11,10 @@ import { IRecipe } from "@/interfaces/recipe.interface";
 type RecipeDetailProps = {
   userId?: string;
   recipe: IRecipe;
+  redirectUrl: string;
 };
 
-const RecipeDetails = ({ userId, recipe }: RecipeDetailProps) => {
+const RecipeDetails = ({ userId, recipe, redirectUrl }: RecipeDetailProps) => {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <Card className="rounded-xl">
@@ -22,7 +23,7 @@ const RecipeDetails = ({ userId, recipe }: RecipeDetailProps) => {
             <div className="absolute top-4 right-4 z-10 flex gap-2">
               <Link
                 className="bg-white rounded-full shadow p-2 hover:bg-gray-100 transition"
-                href={`/recipes/${recipe.id}/edit`}
+                href={`/${redirectUrl}/${recipe.id}/edit`}
                 title="Edit recipe"
               >
                 {editIcon}

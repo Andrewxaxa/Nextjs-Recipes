@@ -20,7 +20,7 @@ const RecipeEditPage: React.FC<RecipeEditPageProps> = async ({ params }) => {
     notFound();
   }
 
-  return <EditRecipe recipe={recipe} redirectUrl="recipes" />;
+  return <EditRecipe recipe={recipe} redirectUrl="my-recipes" />;
 };
 
 export default RecipeEditPage;
