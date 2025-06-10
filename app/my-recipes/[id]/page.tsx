@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 
-import { getRecipe } from "@/lib/recipes";
+import { getRecipe, isFavorite } from "@/lib/recipes";
 import RecipeDetails from "@/components/recipes/recipe-details";
 
 export const metadata: Metadata = {
@@ -24,8 +24,15 @@ const RecipeDetailsPage: React.FC<RecipeDetailsPageProps> = async ({
     notFound();
   }
 
+  let isFav = false;
+
+  if (userObj?.id) {
+    isFav = await isFavorite(userObj?.id, recipe.id);
+  }
+
   return (
     <RecipeDetails
+      isFav={isFav}
       recipe={recipe}
       redirectUrl="my-recipes"
       userId={userObj?.id}

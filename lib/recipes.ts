@@ -1,13 +1,103 @@
 import { createId } from "@paralleldrive/cuid2";
 import sql from "better-sqlite3";
 
+import { dummyInstructions, dummyRecipes } from "./dummy-data";
+
 import {
   IAddRecipePayload,
   IInstruction,
   IRecipe,
   IUpdateRecipePayload,
 } from "@/interfaces/recipe.interface";
+
 const db = sql("app.db");
+
+const initdb = () => {
+  db.exec(
+    `
+    CREATE TABLE IF NOT EXISTS recipes (
+      id TEXT PRIMARY KEY,
+      userId TEXT NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      image TEXT NOT NULL,
+      imagePublicId TEXT NOT NULL,
+      createdAt TEXT,
+      updatedAt TEXT
+    );
+  `,
+  );
+
+  db.exec(
+    `
+    CREATE TABLE IF NOT EXISTS instructions (
+      id TEXT PRIMARY KEY,
+      step INTEGER NOT NULL,
+      text TEXT NOT NULL,
+      recipeId TEXT NOT NULL,
+      FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    );
+  `,
+  );
+
+  db.exec(
+    `
+    CREATE TABLE IF NOT EXISTS favorites (
+      userId TEXT NOT NULL,
+      recipeId TEXT NOT NULL,
+      PRIMARY KEY (userId, recipeId),
+      FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    );
+  `,
+  );
+};
+
+initdb();
+
+const initData = () => {
+  const stmt = db.prepare(`SELECT COUNT(*) AS count FROM recipes`);
+  const result = stmt.get() as { count: number };
+
+  if (result.count > 0) {
+    return;
+  }
+
+  const recipesData = db.prepare(
+    `
+      INSERT INTO recipes VALUES (
+        @id,
+        @userId,
+        @title,
+        @description,
+        @image,
+        @imagePublicId,
+        @createdAt,
+        @updatedAt
+      )
+    `,
+  );
+
+  const instructionsData = db.prepare(
+    `
+      INSERT INTO instructions VALUES (
+        @id,
+        @step,
+        @text,
+        @recipeId
+      )
+    `,
+  );
+
+  for (const recipe of dummyRecipes) {
+    recipesData.run(recipe);
+  }
+
+  for (const instruction of dummyInstructions) {
+    instructionsData.run(instruction);
+  }
+};
+
+initData();
 
 export const getRecipes = async (q = ""): Promise<IRecipe[]> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));

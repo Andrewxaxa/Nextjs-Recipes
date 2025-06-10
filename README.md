@@ -1,53 +1,70 @@
-# Next.js & HeroUI Template
+# Next.js Recipes App
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+A full-stack recipe management application built with Next.js 14, HeroUI v2, Tailwind CSS, and TypeScript. Users can browse, add, edit, and favorite recipes. Authentication is handled via Clerk.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## Features
 
-## Technologies Used
+- Next.js 14 (App Router)
+- HeroUI v2 components
+- Tailwind CSS for styling
+- TypeScript for type safety
+- SQLite database via better-sqlite3
+- Clerk authentication
+- Cloudinary image uploads
+- Favorite recipes functionality
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## Getting Started
 
-## How to Use
-
-### Use the template with create-next-app
-
-To create a new project based on this template using `create-next-app`, run the following command:
+### 1. Clone the repository
 
 ```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+git clone https://github.com/Andrewxaxa/Nextjs-Recipes.git
+cd your-repo
 ```
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Run the development server
+### 3. Configure environment variables
+
+Create a `.env.local` file in the root directory and add the following:
+
+```
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
 ```
 
-### Setup pnpm (optional)
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## Project Structure
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
+- `app/` - Next.js app directory (routes, pages, layouts)
+- `components/` - Reusable React components
+- `lib/` - Database and utility logic ([lib/recipes.ts](lib/recipes.ts))
+- `interfaces/` - TypeScript interfaces
+- `public/` - Static assets
+- `styles/` - Global and component styles
+- `config/` - App and theme configuration
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+This project is licensed under the [MIT License](LICENSE).

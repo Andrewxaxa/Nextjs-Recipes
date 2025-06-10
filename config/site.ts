@@ -25,6 +25,6 @@ export const siteConfig = {
   navItems: [...commonItems],
   navMenuItems: [...commonItems],
   links: {
-    github: "https://github.com/heroui-inc/heroui",
+    github: "https://github.com/Andrewxaxa/Nextjs-Recipes",
   },
 };

@@ -1,7 +1,4 @@
-const sql = require("better-sqlite3");
-const db = sql("app.db");
-
-const dummyRecipes = [
+export const dummyRecipes = [
   {
     id: "1",
     userId: "1",
@@ -37,7 +34,7 @@ const dummyRecipes = [
   },
 ];
 
-const dummyInstructions = [
+export const dummyInstructions = [
   {
     id: "1-1",
     step: 1,
@@ -93,79 +90,3 @@ const dummyInstructions = [
     recipeId: "2",
   },
 ];
-
-db.prepare(
-  `
-    CREATE TABLE IF NOT EXISTS recipes (
-      id TEXT PRIMARY KEY,
-      userId TEXT NOT NULL,
-      title TEXT NOT NULL,
-      description TEXT NOT NULL,
-      image TEXT NOT NULL,
-      imagePublicId TEXT NOT NULL,
-      createdAt TEXT,
-      updatedAt TEXT
-    );
-  `,
-).run();
-
-db.prepare(
-  `
-    CREATE TABLE IF NOT EXISTS instructions (
-      id TEXT PRIMARY KEY,
-      step INTEGER NOT NULL,
-      text TEXT NOT NULL,
-      recipeId TEXT NOT NULL,
-      FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
-    );
-  `,
-).run();
-
-db.prepare(
-  `
-    CREATE TABLE IF NOT EXISTS favorites (
-      userId TEXT NOT NULL,
-      recipeId TEXT NOT NULL,
-      PRIMARY KEY (userId, recipeId),
-      FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
-    );
-  `,
-).run();
-
-function initData() {
-  const recipesData = db.prepare(
-    `
-      INSERT INTO recipes VALUES (
-        @id,
-        @userId,
-        @title,
-        @description,
-        @image,
-        @imagePublicId,
-        @createdAt,
-        @updatedAt
-      )
-    `,
-  );
-
-  const instructionsData = db.prepare(
-    `
-      INSERT INTO instructions VALUES (
-        @id,
-        @step,
-        @text,
-        @recipeId
-      )
-    `,
-  );
-
-  for (const recipe of dummyRecipes) {
-    recipesData.run(recipe);
-  }
-
-  for (const instruction of dummyInstructions) {
-    instructionsData.run(instruction);
-  }
-}
-
-initData();
